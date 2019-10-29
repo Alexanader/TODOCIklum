@@ -3,7 +3,7 @@ const show = (state) => {
     document.querySelector('.filter').style.display = state;
 }
 
-const todoItems = [];
+let todoItems = [];
 
 function OnSearch (input) {
             alert ("The current value of the search field is\n" + input.value);
