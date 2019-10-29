@@ -1,0 +1,222 @@
+$primary-color: black
+$bg-color: white
+$border: solid 2px black
+$border-radius: 12px
+$font-size: 17px
+$box-shadow: 2px 2px 5px rgba(0,0,0,0.82)
+
+*
+	margin: 0
+	padding: 0
+html
+	height: 100%
+	width: 100%
+
+.hide
+	display: none
+.show
+	display: block
+textarea
+	resize: none
+.window
+	position: fixed
+	display: none
+	left: 40%
+	right: 40%
+	top: 20%
+	max-width: 20%
+	min-width: 300px
+	height: auto
+	background: $bg-color
+	z-index: 150
+	box-shadow: $box-shadow
+.filter
+	display: none
+	background-color: rgba(0,0,0,0.6)
+	position: fixed
+	top: 0
+	right: 0
+	left: 0
+	bottom: 0
+	z-index: 100
+.create-form
+	display: flex
+	flex-direction: column
+	text-align: center
+	margin: 0
+	padding: 0
+	width: 100
+	>div
+		margin: 30px
+		text-align: center
+.create-form-buttons
+	display: flex
+	justify-content: space-between
+	margin: 10px
+	>button
+		border: $border
+		border-radius: 12px
+		background: $bg-color
+		color: $primary-color
+		text-align: center
+		text-decoration: none
+		font-size: $font-size
+		padding: 10px
+.create-form-text
+	border: $border
+	background: $bg-color
+	color: $primary-color
+	font-size: $font-size
+
+/*WINDOW STYLE*/
+
+/*HEADER STYLE*/
+header
+	position: relative
+	height: auto
+	width: auto
+	border-bottom: $border 
+	>h1
+		margin: 20px
+/*HEADER STYLE*/
+/*CONTENT HEADER STYLE*/
+main
+	display: inline-block
+	position: relative
+	width: 100%
+	height: 900px
+	padding: 0
+	margin-left: auto
+	bottom: 0
+.form
+	width: 80%
+	margin-left: auto
+	margin-right: auto
+	display: flex
+	flex-direction: row
+	justify-content: space-around
+	>div
+		margin: 10px
+.search-button 
+	input[type=search] 
+		padding: 10px
+		font-size: $font-size
+		border: $border
+		border-left: none
+		float: left
+		width: 85%
+		background: #f1f1f1
+	button
+		float: left
+		width: 15%
+		padding: 10px
+		border: $border
+		border-right: none
+		background: $bg-color
+		color: $primary-color
+		font-size: $font-size
+		cursor: pointer
+.selection-tab
+	position: relative
+	max-width: 320px
+	min-width: 100px
+	border-radius: 3px
+	>select
+		background: $bg-color
+		color: $primary-color
+		width: 100px
+		padding: 10px
+		border: $border
+		font-size: $font-size
+		box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2)
+		-webkit-appearance: none
+		appearance: none
+		outline: none
+.selection-tab:after 
+	content: "\25bc"
+	color: $primary-color
+	padding: 12px 8px
+	position: absolute
+	left: 55%
+	top: 0
+	text-align: center
+	pointer-events: none
+.create-btn
+	border: $border
+	border-radius: 12px
+	background: $bg-color
+	color: $primary-color
+	text-align: center
+	text-decoration: none
+	font-size: $font-size
+	padding: 10px 30px 10px 30px
+/*CONTENT HEADER STYLE*/
+
+/*CONTENT LIST STYLE*/
+#LIST
+	display: block
+	width: 80%
+	margin-left: 10%
+	margin-right: 10%
+.todo-item
+	background-color: $bg-color
+	color: $primary-color
+	width: 200px auto
+	height: 200px auto
+	float: left
+	margin: 10px
+	bottom: 10px
+	border: $border
+	>div
+		margin: 20px
+	div input[type=text]
+		display: none
+	&.editMode 
+		div input[type=text]
+			display: block
+	&.editMode
+		div label
+			display: none
+.todo-priority
+	border: dashed 2px black
+	border-radius: 12px
+	padding: 10px
+.button-todo
+	border: $border
+	border-radius: 12px
+	background: $bg-color
+	color: $primary-color
+	text-align: center
+	text-decoration: none
+	font-size: $font-size
+	padding: 10px
+.done
+	background-color: #FF7272
+	float: right
+.edit-window
+	position: fixed
+	display: none
+	left: 40%
+	right: 40%
+	top: 20%
+	max-width: 20%
+	min-width: 300px
+	height: auto
+	background: $bg-color
+	z-index: 150
+	box-shadow: $box-shadow
+/*CONTENT LIST STYLE*/
+
+/*FOOTER STYLE*/
+footer 
+	position: relative
+	border-top: $border
+	left: 0
+	bottom: 0
+	width: 100%
+	height: 10%
+	clear: both
+	background: $bg-color
+	>h2
+		margin: 20px
+/*FOOTER STYLE*/

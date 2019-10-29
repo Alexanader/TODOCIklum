@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--    <link rel="stylesheet" href="../../../Downloads/index.sass">-->
+</head>
+<body>
+<header>
+    <h1>TODOList</h1>
+</header>
+<main>
+    <div class="form">
+        <div class="search-button">
+            <button type="submit" onclick="sortBy()" onsearch="OnSearch(this)"><i class="fa fa-search"></i></button>
+            <input type="search" name="q" placeholder="Search by title" id = "Search">
+        </div>
+        <div class="selection-tab">
+            <select onchange="sortBy()" id ='complicitySelect' >
+                <option selected="all" value="all">all</option>
+                <option value="open">Open</option>
+                <option value="done">Done</option>
+            </select>
+        </div>
+        <div class="selection-tab">
+            <select onchange="sortBy()" id = 'prioritySelect'>
+                <option selected="all" value="all">all</option>
+                <option value="low">low</option>
+                <option value="medium">medium</option>
+                <option value="high">high</option>
+            </select>
+        </div>
+        <div>
+            <button onclick = "show('block')" class="create-btn">Create</button>
+        </div>
+    </div>
+    <div id ="list">
+    </div>
+</main>
+<div class = 'filter' onclick = "show('none')" ></div>
+<div class = 'window'>
+    <div class="create-form">
+        <div>
+            <p><b>Title</b></p>
+            <input class="create-form-text" id='title' type = 'text' placeholder="Title">
+        </div>
+        <div>
+            <p><b>Description</b></p>
+            <textarea class="create-form-text" id='description' name = 'Description' cols="20" rows="4" placeholder="Description"></textarea>
+        </div>
+        <div>
+            <p><b>Priority</b></p>
+            <div class="selection-tab">
+                <select id = 'priority'>
+                    <option value="low">low</option>
+                    <option value="medium">medium</option>
+                    <option value="high">high</option>
+                </select>
+            </div>
+            <div class="create-form-buttons">
+                <button onclick = "show('none')">Cancel</button>
+                <button onclick = "newElement()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <h2>Alexander Berestovenko</h2>
+</footer>
+<script src = "test.js"></script>
+</body>
+</html>
