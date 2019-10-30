@@ -4,10 +4,12 @@ const show = (state) => {
 }
 
 let todoItems = [];
+let isChanged = new Set();
 
-function OnSearch (input) {
-            alert ("The current value of the search field is\n" + input.value);
-        }
+
+// function onSearch = (input) => {
+//             alert ("The current value of the search field is\n" + input.value);
+//         }
 
 
 const resetForm = () => {
@@ -24,7 +26,8 @@ const newElement = () => {
     if (title === '') {
         alert("You must write something!");
     } else {
-        addTodo(title, description, selectedPriority)
+        let todoItemNew = {title:title, description:description, priority:selectedPriority};
+        addTodo(todoItemNew);
         show('none')
     }
 
@@ -33,82 +36,92 @@ const newElement = () => {
 
 const getCheckedItem = (key) => {
     const index = todoItems.findIndex(item => item.id === Number(key));
-    todoItems[index].checked = !todoItems[index].checked;
-
-    const item = document.querySelector(`[data-key='${key}']`);
-    return {index, item}
+    const wrapper = document.querySelector(`[data-key='${key}']`);
+    return {index, wrapper}
 }
 
 const toggleDone = (key) => {
-    const {index, item} = getCheckedItem(key);
+    const {index, wrapper} = getCheckedItem(key);
+
+    todoItems[index].checked = !todoItems[index].checked;
+    
+    isChanged.add(todoItems[index].id);
+
     if (todoItems[index].checked) {
-        item.classList.add('done');
+        wrapper.classList.add('done');
     } else {
-        item.classList.remove('done');
+        wrapper.classList.remove('done');
     }
 };
 
 const deleteTodo = (key) => {
     todoItems = todoItems.filter(item => item.id !== Number(key));
-    const item = document.querySelector(`[data-key='${key}']`);
-    item.remove();
+    
+    const wrapper = document.querySelector(`[data-key='${key}']`);
+    wrapper.remove();
+    
+    sessionStorage.removeItem(key)
 };
 
 const editTask = (key) => {
-    const {index, item} = getCheckedItem(key);
+    const {index, wrapper} = getCheckedItem(key);
 
-    const editTitle = item.querySelector('#todo-input-title');
-    const editDescription = item.querySelector('#todo-input-description');
-
-    const labelTitle = item.querySelector("#todo-label-title");
-    const labelDescription = item.querySelector("#todo-label-description");
-    const isEditEnable = item.classList.contains("editMode");
+    const editTitle = wrapper.querySelector('#todo-input-title');
+    const editDescription = wrapper.querySelector('#todo-input-description');
+    const labelTitle = wrapper.querySelector("#todo-label-title");
+    const labelDescription = wrapper.querySelector("#todo-label-description");
+    const isEditEnable = wrapper.classList.contains("editMode");
 
     if (isEditEnable) {
         labelTitle.innerText = editTitle.value;
         todoItems[index].title = editTitle.value;
         labelDescription.innerText = editDescription.value;
         todoItems[index].description = editDescription.value;
+
+        isChanged.add(todoItems[index].id);
     } else {
         editTitle.value = labelTitle.innerText;
         editDescription.value = labelDescription.innerText;
     }
 
-    item.classList.toggle("editMode");
+    wrapper.classList.toggle("editMode");
 }
 
-const addTodo = (title, description, priority) => {
-    const todo = {
-        title,
-        description,
-        priority,
-        checked: false,
-        id: Date.now(),
+const addTodo = (todoItem) => {
+    let todo = {
+        title: todoItem.title,
+        description: todoItem.description,
+        priority: todoItem.priority,
+        id: todoItem.id ? todoItem.id : Date.now(),
+        checked: todoItem.checked ? true : false,
     };
-    todoItems.push(todo);
+
+    todoItems.push(todo);    
 
     const list = document.querySelector('#list');
-    list.insertAdjacentHTML('beforeend', `
-    <div class = 'todo-item show' data-key="${todo.id}">
-          <div><p>Title</p>
-              <label id="todo-label-title">${todo.title}</label>
-              <input id="todo-input-title" type='text' value = '${todo.title}'>
-          </div>
-          <div><p>Description</p>
-              <label id="todo-label-description">${todo.description}</label>
-              <input id="todo-input-description" type='text' value = '${todo.description}'>
-          </div>
-          <div class = 'todo-priority'>${todo.priority}</div>
-            <button  onclick = "toggleDone(${todo.id})" class="button-todo js-done-todo">
-              Done
+    list.insertAdjacentHTML('beforeend', 
+        `<div class ='todo-item show ${todo.checked ? 'done' : ''}' data-key="${todo.id}">
+            <div><p>Title</p>
+                <label id="todo-label-title">${todo.title}</label>
+                <input id="todo-input-title" type='text' value = '${todo.title}'>
+            </div>
+            <div>
+                <p>Description</p>
+                <label id="todo-label-description">${todo.description}</label>
+                <input id="todo-input-description" type='text' value = '${todo.description}'>
+            </div>
+            <div class = 'todo-priority'>${todo.priority}</div>
+            <button onclick ="toggleDone(${todo.id})" class="button-todo js-done-todo">
+                Done
             </button>
-            <button onclick = "deleteTodo(${todo.id})" for="${todo.id}" class="button-todo js-delete-todo">
+            <button onclick="deleteTodo(${todo.id})" for="${todo.id}" class="button-todo js-delete-todo">
               Delete
             </button>
-            <button onclick = "editTask(${todo.id})" class = "button-todo js-edit-todo">
+            <button onclick="editTask(${todo.id})" class="button-todo js-edit-todo">
                 Edit
             </button>
-      </div>`);
+        </div>`
+    );
 }
 
 
@@ -143,4 +156,26 @@ const renderSortedTodos = (items) => {
         item.classList.add('hide');
         item.classList.remove('show');
     })
+}
+
+
+window.onbeforeunload = () => {
+    todoItems.forEach(todoItem => {
+        let todoItemId = todoItem.id;
+
+        if (!sessionStorage.getItem(todoItemId)) {
+            sessionStorage.setItem(todoItemId, JSON.stringify(todoItem));
+        } else if (isChanged.has(todoItemId)) {
+            sessionStorage.setItem(todoItemId, JSON.stringify(todoItem));  
+        }
+    });
+};
+
+
+for (let i = 0, ssLength = sessionStorage.length; i < ssLength; i++) {
+    let
+        key = sessionStorage.key(i),
+        todoItem = JSON.parse(sessionStorage.getItem(key));
+
+    addTodo(todoItem)
 }
