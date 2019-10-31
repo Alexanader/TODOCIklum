@@ -137,16 +137,6 @@ main {
     appearance: none;
     outline: none; }
 
-.selection-tab:after {
-  content: "▼";
-  color: black;
-  padding: 12px 8px;
-  position: absolute;
-  left: 55%;
-  top: 0;
-  text-align: center;
-  pointer-events: none; }
-
 .create-btn {
   border: solid 2px black;
   border-radius: 12px;
@@ -178,10 +168,19 @@ main {
     margin: 20px; }
   .todo-item div input[type=text] {
     display: none; }
+  .todo-item .selection-tab {
+    display: none;
+  }
   .todo-item.editMode div input[type=text] {
     display: block; }
   .todo-item.editMode div label {
     display: none; }
+  .todo-item.editMode .selection-tab{
+    display: block;
+  }
+  .todo-item.editMode .todo-priority{
+    display: none;
+  }
 
 .todo-priority {
   border: dashed 2px black;

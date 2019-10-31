@@ -132,15 +132,6 @@ main
 		-webkit-appearance: none
 		appearance: none
 		outline: none
-.selection-tab:after 
-	content: "\25bc"
-	color: $primary-color
-	padding: 12px 8px
-	position: absolute
-	left: 55%
-	top: 0
-	text-align: center
-	pointer-events: none
 .create-btn
 	border: $border
 	border-radius: 12px
@@ -171,12 +162,18 @@ main
 		margin: 20px
 	div input[type=text]
 		display: none
+	.selection-tab
+		display: none
 	&.editMode 
 		div input[type=text]
 			display: block
-	&.editMode
 		div label
 			display: none
+		.selection-tab
+			display: block
+		.todo-priority
+			display: none
+
 .todo-priority
 	border: dashed 2px black
 	border-radius: 12px

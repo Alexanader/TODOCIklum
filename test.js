@@ -70,6 +70,10 @@ const editTask = (key) => {
     const editDescription = wrapper.querySelector('#todo-input-description');
     const labelTitle = wrapper.querySelector("#todo-label-title");
     const labelDescription = wrapper.querySelector("#todo-label-description");
+    const labelPriority = wrapper.querySelector("#todo-label-priority");
+    const formPriority = wrapper.querySelector("#todo-edit-priority");
+    const editPriority = formPriority.options[formPriority.selectedIndex].value;
+    console.log(editPriority)
     const isEditEnable = wrapper.classList.contains("editMode");
 
     if (isEditEnable) {
@@ -77,11 +81,15 @@ const editTask = (key) => {
         todoItems[index].title = editTitle.value;
         labelDescription.innerText = editDescription.value;
         todoItems[index].description = editDescription.value;
+        labelPriority.innerText = editPriority;
+        todoItems[index].priority = editPriority;
+
 
         isChanged.add(todoItems[index].id);
     } else {
         editTitle.value = labelTitle.innerText;
         editDescription.value = labelDescription.innerText;
+        editPriority.value = formPriority.innerText;
     }
 
     wrapper.classList.toggle("editMode");
@@ -110,7 +118,14 @@ const addTodo = (todoItem) => {
                 <label id="todo-label-description">${todo.description}</label>
                 <input id="todo-input-description" type='text' value = '${todo.description}'>
             </div>
-            <div class = 'todo-priority'>${todo.priority}</div>
+            <div class = 'todo-priority'><label id="todo-label-priority">${todo.priority}</label></div>
+            <div class="selection-tab">
+            <select id ='todo-edit-priority'>
+                <option value="low">low</option>
+                <option value="medium">medium</option>
+                <option value="high">high</option>
+            </select>
+            </div>
             <button onclick ="toggleDone(${todo.id})" class="button-todo js-done-todo">
                 Done
             </button>
